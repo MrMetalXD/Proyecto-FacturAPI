@@ -1,13 +1,19 @@
 // src/index.js
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
-const typeDefs = require('./schemas/productSchema');
-const resolvers = require('./resolvers/productResolver');
+const productTypeDefs = require('./schemas/productSchema');
+const productResolvers = require('./resolvers/productResolver');
+const userTypeDefs = require('./schemas/userSchema');
+const userResolvers = require('./resolvers/userResolver');
 
 const startServer = async () => {
   // Conectar a MongoDB
-  await mongoose.connect('mongodb+srv://iarjona:Isarca2010X@clusterisarvi.7txs2.mongodb.net/?retryWrites=true&w=majority&appName=ClusterIsarvi');
+  await mongoose.connect('mongodb+srv://alcuevasal:12345@products.thkd3.mongodb.net/?retryWrites=true&w=majority&appName=products');
   
+  const typeDefs = [productTypeDefs, userTypeDefs];
+  const resolvers = [productResolvers, userResolvers];
+ 
+ 
   const server = new ApolloServer({ typeDefs, resolvers });
   
   server.listen().then(({ url }) => {
